@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+    localhost:
+      image: postgres:16
+      volumes:
+        - db_data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: ${DATABASE_NAME}
+        POSTGRES_USER: ${DATABASE_USER}
+        POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      ports:
+        - "5432:5432"
+
+    web:
+      image: accuknox:1.0
+      env_file:
+        - .env
+      ports:
+        - "8000:8000"
+      depends_on:
+        - localhost
+
+    migrate:
+      build: .
+      command: python manage.py makemigrations accounts && python manage.py makemigrations main && python manage.py migrate
+      depends_on:
+        - localhost
+
+volumes:
+  db_data:
