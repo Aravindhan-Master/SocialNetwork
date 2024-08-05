@@ -53,6 +53,9 @@ class ProfileView(APIView):
         if not username:
             return Response({"message": "Username cannot be empty"}, status=status.HTTP_400_BAD_REQUEST)
         
+        if User.objects.filter(username=username).exists():
+            return Response({'message': 'A user with this username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
         first_name = data.get('first_name')
         last_name = data.get('last_name')
         user.username = username
