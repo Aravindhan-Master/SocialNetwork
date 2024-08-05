@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-    localhost:
+    db:
       image: postgres:16
       volumes:
         - db_data:/var/lib/postgresql/data
@@ -19,13 +19,13 @@ services:
       ports:
         - "8000:8000"
       depends_on:
-        - localhost
+        - db
 
     migrate:
       build: .
       command: python manage.py makemigrations accounts && python manage.py makemigrations main && python manage.py migrate
       depends_on:
-        - localhost
+        - db
 
 volumes:
   db_data:
