@@ -159,6 +159,9 @@ class RespondFriendRequest(APIView):
         except:
             return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
         
+        if req_obj.receiver != request.user:
+            return Response({'message': 'You are not allowed to respond to this friend request'}, status=status.HTTP_403_FORBIDDEN)
+        
         req_status = data.get('status')
         if not isinstance(req_status, bool):
             return Response({'message': 'Invalid reponse to a friend request'}, status=status.HTTP_400_BAD_REQUEST)
