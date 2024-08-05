@@ -40,7 +40,6 @@
 6. Migrate database schema
 
 ```bash
-    python manage.py makemigrations accounts
     python manage.py makemigrations main
     python manage.py migrate
 ```
