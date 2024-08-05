@@ -49,3 +49,9 @@
 ```bash
     python manage.py runserver
 ```
+
+POSTMAN COLLECTION LINK:
+
+```bash
+    https://www.postman.com/aravindhan-2003/workspace/aravindhan/collection/37437613-d335e733-c5a9-4b0e-9288-0162096cd861
+```
