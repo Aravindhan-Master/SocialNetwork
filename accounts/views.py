@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from .utils import create_username, is_valid_email
 
 class Signup(APIView):
@@ -60,3 +61,12 @@ class Login(APIView):
             return Response(response, status=status.HTTP_200_OK)
         
         return Response({'message': 'Username or password is incorrect'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LogoutView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        Token.objects.get(user=request.user).delete()
+        return Response({'message': 'User logged out'}, status=status.HTTP_200_OK)
